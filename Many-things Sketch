@@ -1,0 +1,81 @@
+let time = 0; // A custom variable to track time
+
+
+function setup() {
+  createCanvas(800, 600);
+
+}
+
+
+
+function draw() {
+  background(220);
+  //ocean
+    fill(42,150,232)
+  rect(0,350,800,70)
+  //sand
+  fill(252,235,179)
+  rect(0,420,800,180)
+  //stage
+  fill(50)
+  rect(0,300,350,300) 
+
+ time += 0.05
+ let handAngleBase1 = sin(time) * PI / 4; // Fan 1 arm oscillation
+  drawFan1(100, 100, handAngleBase1);
+
+  // Fan 2 with opposite arm oscillation
+  let handAngleBase2 =  sin(time) * PI / 4 
+  drawFan0(200, 200, handAngleBase2);
+
+}
+
+function drawFan1(x, y, handAngle) {
+  // Draw the fan's head
+  fill(247,231,213); // Skin color
+  ellipse(x, y - 30, 50, 60); // Head
+
+  // Draw the fan's body
+  fill(217,38,38); // Clothing color
+  rect(x - 25, y, 50, 70); // Body (rectangle)
+
+  // Draw the waving arm
+  push();
+  translate(x, y); // Move to the top of the body (shoulder position)
+  rotate(handAngle); // Rotate the arm
+  fill(150); // Arm color
+  rect(-5, -50, 15, 60); // Arm (rectangle), attached at the shoulder
+  
+  let r = sin(time) * 127 + 128; // Oscillating red
+  let g = sin(time + TWO_PI / 3) * 127 + 128; // Oscillating green
+  let b = sin(time + TWO_PI / 3 * 2) * 127 + 128; // Oscillating blue
+
+  fill(r, g, b); // Set the ball's color
+  circle(0,-60,30)
+  pop();
+}
+
+function drawFan0(x, y, handAngle) {
+  
+   // Draw the waving arm
+  push();
+  translate(x-20, y); // Move to the top of the body (shoulder position)
+  rotate(handAngle); // Rotate the arm
+  fill(150); // Arm color
+  rect(-5, -50, 15, 60); // Arm (rectangle), attached at the shoulder
+  
+  let r = sin(time) * 127 + 128; // Oscillating red
+  let g = sin(time + TWO_PI / 3) * 127 + 128; // Oscillating green
+  let b = sin(time + TWO_PI / 3 * 2) * 127 + 128; // Oscillating blue
+
+  fill(r, g, b); // Set the ball's color
+  circle(0,-60,30)
+  pop();
+  // Draw the fan's head
+  fill(247,231,213); // Skin color
+  ellipse(x, y - 30, 50, 60); // Head (circle)
+  // Draw the fan's body
+  fill(230,127,76); // Clothing color
+  rect(x - 25, y, 50, 70); // Body (rectangle)
+
+}
