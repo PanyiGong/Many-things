@@ -4,6 +4,13 @@ let fans = []; // Array to store fan objects
 let rows = 3; // Number of rows
 let cols = 6; // Number of columns per side
 
+
+
+let baseRadius = 100; // Base radius for the sun
+let radiusBreath; // Breathing radius modifier
+let breathingSpeed = 0.064; // Speed of the breathing effect
+
+
 function setup() {
   createCanvas(800, 600);
   noStroke()
@@ -68,6 +75,11 @@ function draw() {
       drawFan0(fan.x, fan.y, handAngle); // Fan 0 on left side
     }
   }
+  
+   //DrawSun
+   time += breathingSpeed;
+  radiusBreath = sin(time) * 10 + baseRadius; // The radius will oscillate between baseRadius-20 and baseRadius+20
+  drawSun(600,200, radiusBreath);
 
 }
 
@@ -118,5 +130,15 @@ function drawFan0(x, y, handAngle) {
   // Draw the fan's body
   fill(230,127,76); // Clothing color
   rect(x - 25, y, 50, 70); // Body (rectangle)
+}
 
+
+function drawSun(x, y, radiusBreath) {
+  // Draw the sun's core (a yellow circle)
+  fill(255,229,180); // Yellow color
+  noStroke();
+  ellipse(x, y, radiusBreath * 2, radiusBreath * 2); // Sun's core, using the breathing radius
+  
+  fill(255, 204, 0)
+  circle(x,y,baseRadius*1.7)
 }
