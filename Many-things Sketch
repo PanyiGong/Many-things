@@ -67,8 +67,10 @@ function draw() {
   //stage
   fill(50)
   rect(0,300,350,300) 
+  
+  drawSinger(280,300)
 
- time += 0.05
+ time += 0.006
  let handAngleBase1 = sin(time) * PI / 4; // Fan 1 arm oscillation
   // Increment the time variable to simulate passing time
   time += 0.00644;
@@ -177,6 +179,35 @@ function drawSun(x, y, radiusBreath) {
   fill(255, 204, 0)
   circle(x,y,baseRadius*1.7)
 }
-  fill(255, 204, 0)
-  circle(x,y,baseRadius*1.7)
+
+
+function drawSinger (x,y) {
+   //Draw singer:
+   fill("white")
+  quad(x,y,
+      x-50,y,
+      x-40,y-100,
+      x-10,y-100)
+  
+  fill(247,231,213)
+  ellipse(x-25,y-130,60,60)
+  
+   push();
+  // Set the rotation so the arm points towards the microphone
+  translate(x - 25, y - 80); // Position of the arm
+  rotate(0); // Adjust the angle of the arm
+  fill(207,136,29); // Arm color
+  rect(-5, 0, 10, 50); // Arm (rectangle)
+  pop();
+
+ // Draw the microphone
+  fill(150); // Microphone color
+  ellipse(x + 20, y - 105, 15, 15); // Microphone head
+  stroke(10); // Microphone line
+  line(x + 40, y - 105, x + 40, y); // Microphone handle
+  noStroke()
+  rect(x+20,y-107.5,30,5)
+  rect(x,y-5,50,5)
 }
+
+
