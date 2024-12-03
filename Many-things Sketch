@@ -10,6 +10,7 @@ let baseRadius = 100; // Base radius for the sun
 let radiusBreath; // Breathing radius modifier
 let breathingSpeed = 0.064; // Speed of the breathing effect
 
+let ribbons = [];
 
 function setup() {
   createCanvas(800, 600);
@@ -36,8 +37,22 @@ function setup() {
       };
       fans.push(fan); // Add fan object to the fans array
     }
-
 }
+  
+  //Create Ribbon falling out of sky
+   for (let i = 0; i < 100; i++) {
+    let ribbon = {
+      h : random(10,20),
+      x: random(width), // Random starting position horizontally
+      y: random(-500,-10), // Start high off the screen
+      color: color(random(255), random(255), random(255)), // Random color
+      dy: random(1, 3), // Random speed for vertical movement
+      dx: random(-1, 1) // Random horizontal movement
+      
+    };
+    ribbons.push(ribbon);
+  }
+
 }
 
 
@@ -80,7 +95,27 @@ function draw() {
    time += breathingSpeed;
   radiusBreath = sin(time) * 10 + baseRadius; // The radius will oscillate between baseRadius-20 and baseRadius+20
   drawSun(600,200, radiusBreath);
+  
+  //Draw ribbons
+  for (let i = 0; i < ribbons.length; i++) {
+    let ribbon = ribbons[i];
 
+    // Movement of ribbon
+    ribbon.y += ribbon.dy; // Move the ribbon down
+    ribbon.x += ribbon.dx; // Move the ribbon horizontally
+
+    // If the ribbon goes off the bottom of the screen, reset it
+    if (ribbon.y > height) {
+      ribbon.y = random(-500, -50); // Reset vertical position to fall from the top again
+      ribbon.x = random(width); // Reset horizontal position
+    }
+    
+    // Draw the ribbon
+    fill(ribbon.color);
+    noStroke();
+    rect(ribbon.x, ribbon.y, 5,ribbon.h); // Ribbon (ellipse shape)
+
+}
 }
 
 function drawFan1(x, y, handAngle) {
@@ -139,6 +174,9 @@ function drawSun(x, y, radiusBreath) {
   noStroke();
   ellipse(x, y, radiusBreath * 2, radiusBreath * 2); // Sun's core, using the breathing radius
   
+  fill(255, 204, 0)
+  circle(x,y,baseRadius*1.7)
+}
   fill(255, 204, 0)
   circle(x,y,baseRadius*1.7)
 }
