@@ -1,11 +1,37 @@
 let time = 0; // A custom variable to track time
 
+let fans = []; // Array to store fan objects
+let rows = 3; // Number of rows
+let cols = 6; // Number of columns per side
 
 function setup() {
   createCanvas(800, 600);
+  noStroke()
+  // Create fans for the right side (fan type 0)
+  for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < cols; j++) {
+      let fan = {
+        x: 410 + j * 70, // Evenly space fans in columns on the left side
+        y: 400 + i * 50, // Evenly space fans in rows
+        type: 0, // Fan type 0 for left side
+      };
+      fans.push(fan); // Add fan object to the fans array
+    }
+  }
+
+  // Create fans for the left side (fan type 1)
+  for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < cols; j++) {
+      let fan = {
+        x: 20 + j * 60, // Evenly space fans in columns on the right side
+        y: 400 + i * 80, // Evenly space fans in rows
+        type: 1, // Fan type 1 for right side
+      };
+      fans.push(fan); // Add fan object to the fans array
+    }
 
 }
-
+}
 
 
 function draw() {
@@ -22,11 +48,26 @@ function draw() {
 
  time += 0.05
  let handAngleBase1 = sin(time) * PI / 4; // Fan 1 arm oscillation
-  drawFan1(100, 100, handAngleBase1);
+  // Increment the time variable to simulate passing time
+  time += 0.00644;
 
-  // Fan 2 with opposite arm oscillation
-  let handAngleBase2 =  sin(time) * PI / 4 
-  drawFan0(200, 200, handAngleBase2);
+  // swinging hand
+  let handAngleBase = sin(time) * PI / 4; // Oscillate between -PI/4 and +PI/4 for all fans
+
+  // Loop through each fan and draw them
+  for (let i = 0; i < fans.length; i++) {
+    let fan = fans[i];
+
+    // For the right side, invert the direction of the arm movement
+    let handAngle = fan.type === 0 ? handAngleBase : -handAngleBase;
+
+    // Draw each fan based on its type (0 for fan 1, 1 for fan 2)
+    if (fan.type === 0) {
+      drawFan1(fan.x, fan.y, handAngle); // Fan 1 on left side
+    } else {
+      drawFan0(fan.x, fan.y, handAngle); // Fan 0 on left side
+    }
+  }
 
 }
 
